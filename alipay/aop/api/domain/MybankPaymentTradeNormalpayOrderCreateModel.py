@@ -17,6 +17,8 @@ class MybankPaymentTradeNormalpayOrderCreateModel(object):
         self._ipid = None
         self._iproleid = None
         self._order_type = None
+        self._payee_fund_detail = None
+        self._payer_fund_detail = None
         self._request_no = None
         self._request_time = None
 
@@ -84,6 +86,20 @@ class MybankPaymentTradeNormalpayOrderCreateModel(object):
     def order_type(self, value):
         self._order_type = value
     @property
+    def payee_fund_detail(self):
+        return self._payee_fund_detail
+
+    @payee_fund_detail.setter
+    def payee_fund_detail(self, value):
+        self._payee_fund_detail = value
+    @property
+    def payer_fund_detail(self):
+        return self._payer_fund_detail
+
+    @payer_fund_detail.setter
+    def payer_fund_detail(self, value):
+        self._payer_fund_detail = value
+    @property
     def request_no(self):
         return self._request_no
 
@@ -146,6 +162,16 @@ class MybankPaymentTradeNormalpayOrderCreateModel(object):
                 params['order_type'] = self.order_type.to_alipay_dict()
             else:
                 params['order_type'] = self.order_type
+        if self.payee_fund_detail:
+            if hasattr(self.payee_fund_detail, 'to_alipay_dict'):
+                params['payee_fund_detail'] = self.payee_fund_detail.to_alipay_dict()
+            else:
+                params['payee_fund_detail'] = self.payee_fund_detail
+        if self.payer_fund_detail:
+            if hasattr(self.payer_fund_detail, 'to_alipay_dict'):
+                params['payer_fund_detail'] = self.payer_fund_detail.to_alipay_dict()
+            else:
+                params['payer_fund_detail'] = self.payer_fund_detail
         if self.request_no:
             if hasattr(self.request_no, 'to_alipay_dict'):
                 params['request_no'] = self.request_no.to_alipay_dict()
@@ -181,6 +207,10 @@ class MybankPaymentTradeNormalpayOrderCreateModel(object):
             o.iproleid = d['iproleid']
         if 'order_type' in d:
             o.order_type = d['order_type']
+        if 'payee_fund_detail' in d:
+            o.payee_fund_detail = d['payee_fund_detail']
+        if 'payer_fund_detail' in d:
+            o.payer_fund_detail = d['payer_fund_detail']
         if 'request_no' in d:
             o.request_no = d['request_no']
         if 'request_time' in d:

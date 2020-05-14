@@ -17,6 +17,7 @@ class MiniAppVersionInfo(object):
         self._build_task_log = None
         self._coverage_package = None
         self._coverage_rate = None
+        self._error_msg = None
         self._ios_client_version_info = None
         self._preonline_package = None
         self._security_scan_result = None
@@ -63,6 +64,13 @@ class MiniAppVersionInfo(object):
     @coverage_rate.setter
     def coverage_rate(self, value):
         self._coverage_rate = value
+    @property
+    def error_msg(self):
+        return self._error_msg
+
+    @error_msg.setter
+    def error_msg(self, value):
+        self._error_msg = value
     @property
     def ios_client_version_info(self):
         return self._ios_client_version_info
@@ -126,6 +134,11 @@ class MiniAppVersionInfo(object):
                 params['coverage_rate'] = self.coverage_rate.to_alipay_dict()
             else:
                 params['coverage_rate'] = self.coverage_rate
+        if self.error_msg:
+            if hasattr(self.error_msg, 'to_alipay_dict'):
+                params['error_msg'] = self.error_msg.to_alipay_dict()
+            else:
+                params['error_msg'] = self.error_msg
         if self.ios_client_version_info:
             if hasattr(self.ios_client_version_info, 'to_alipay_dict'):
                 params['ios_client_version_info'] = self.ios_client_version_info.to_alipay_dict()
@@ -163,6 +176,8 @@ class MiniAppVersionInfo(object):
             o.coverage_package = d['coverage_package']
         if 'coverage_rate' in d:
             o.coverage_rate = d['coverage_rate']
+        if 'error_msg' in d:
+            o.error_msg = d['error_msg']
         if 'ios_client_version_info' in d:
             o.ios_client_version_info = d['ios_client_version_info']
         if 'preonline_package' in d:

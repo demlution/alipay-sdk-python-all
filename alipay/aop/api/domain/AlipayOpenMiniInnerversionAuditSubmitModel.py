@@ -26,6 +26,7 @@ class AlipayOpenMiniInnerversionAuditSubmitModel(object):
         self._screen_shot_list = None
         self._service_email = None
         self._service_phone = None
+        self._special_license_pic_list = None
         self._version_desc = None
 
     @property
@@ -154,6 +155,13 @@ class AlipayOpenMiniInnerversionAuditSubmitModel(object):
     def service_phone(self, value):
         self._service_phone = value
     @property
+    def special_license_pic_list(self):
+        return self._special_license_pic_list
+
+    @special_license_pic_list.setter
+    def special_license_pic_list(self, value):
+        self._special_license_pic_list = value
+    @property
     def version_desc(self):
         return self._version_desc
 
@@ -254,6 +262,11 @@ class AlipayOpenMiniInnerversionAuditSubmitModel(object):
                 params['service_phone'] = self.service_phone.to_alipay_dict()
             else:
                 params['service_phone'] = self.service_phone
+        if self.special_license_pic_list:
+            if hasattr(self.special_license_pic_list, 'to_alipay_dict'):
+                params['special_license_pic_list'] = self.special_license_pic_list.to_alipay_dict()
+            else:
+                params['special_license_pic_list'] = self.special_license_pic_list
         if self.version_desc:
             if hasattr(self.version_desc, 'to_alipay_dict'):
                 params['version_desc'] = self.version_desc.to_alipay_dict()
@@ -300,6 +313,8 @@ class AlipayOpenMiniInnerversionAuditSubmitModel(object):
             o.service_email = d['service_email']
         if 'service_phone' in d:
             o.service_phone = d['service_phone']
+        if 'special_license_pic_list' in d:
+            o.special_license_pic_list = d['special_license_pic_list']
         if 'version_desc' in d:
             o.version_desc = d['version_desc']
         return o

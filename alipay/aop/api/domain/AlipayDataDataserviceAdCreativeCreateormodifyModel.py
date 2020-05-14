@@ -3,12 +3,14 @@
 import json
 
 from alipay.aop.api.constant.ParamConstants import *
+from alipay.aop.api.domain.ActionProperty import ActionProperty
 from alipay.aop.api.domain.MaterialUnit import MaterialUnit
 
 
 class AlipayDataDataserviceAdCreativeCreateormodifyModel(object):
 
     def __init__(self):
+        self._action_property_list = None
         self._action_type = None
         self._batch_tag = None
         self._biz_token = None
@@ -19,11 +21,25 @@ class AlipayDataDataserviceAdCreativeCreateormodifyModel(object):
         self._material_list = None
         self._name = None
         self._region_list = None
+        self._status = None
         self._store_id = None
         self._target_app_id = None
         self._target_url = None
         self._template_id = None
 
+    @property
+    def action_property_list(self):
+        return self._action_property_list
+
+    @action_property_list.setter
+    def action_property_list(self, value):
+        if isinstance(value, list):
+            self._action_property_list = list()
+            for i in value:
+                if isinstance(i, ActionProperty):
+                    self._action_property_list.append(i)
+                else:
+                    self._action_property_list.append(ActionProperty.from_alipay_dict(i))
     @property
     def action_type(self):
         return self._action_type
@@ -107,6 +123,13 @@ class AlipayDataDataserviceAdCreativeCreateormodifyModel(object):
             for i in value:
                 self._region_list.append(i)
     @property
+    def status(self):
+        return self._status
+
+    @status.setter
+    def status(self, value):
+        self._status = value
+    @property
     def store_id(self):
         return self._store_id
 
@@ -138,6 +161,16 @@ class AlipayDataDataserviceAdCreativeCreateormodifyModel(object):
 
     def to_alipay_dict(self):
         params = dict()
+        if self.action_property_list:
+            if isinstance(self.action_property_list, list):
+                for i in range(0, len(self.action_property_list)):
+                    element = self.action_property_list[i]
+                    if hasattr(element, 'to_alipay_dict'):
+                        self.action_property_list[i] = element.to_alipay_dict()
+            if hasattr(self.action_property_list, 'to_alipay_dict'):
+                params['action_property_list'] = self.action_property_list.to_alipay_dict()
+            else:
+                params['action_property_list'] = self.action_property_list
         if self.action_type:
             if hasattr(self.action_type, 'to_alipay_dict'):
                 params['action_type'] = self.action_type.to_alipay_dict()
@@ -203,6 +236,11 @@ class AlipayDataDataserviceAdCreativeCreateormodifyModel(object):
                 params['region_list'] = self.region_list.to_alipay_dict()
             else:
                 params['region_list'] = self.region_list
+        if self.status:
+            if hasattr(self.status, 'to_alipay_dict'):
+                params['status'] = self.status.to_alipay_dict()
+            else:
+                params['status'] = self.status
         if self.store_id:
             if hasattr(self.store_id, 'to_alipay_dict'):
                 params['store_id'] = self.store_id.to_alipay_dict()
@@ -230,6 +268,8 @@ class AlipayDataDataserviceAdCreativeCreateormodifyModel(object):
         if not d:
             return None
         o = AlipayDataDataserviceAdCreativeCreateormodifyModel()
+        if 'action_property_list' in d:
+            o.action_property_list = d['action_property_list']
         if 'action_type' in d:
             o.action_type = d['action_type']
         if 'batch_tag' in d:
@@ -250,6 +290,8 @@ class AlipayDataDataserviceAdCreativeCreateormodifyModel(object):
             o.name = d['name']
         if 'region_list' in d:
             o.region_list = d['region_list']
+        if 'status' in d:
+            o.status = d['status']
         if 'store_id' in d:
             o.store_id = d['store_id']
         if 'target_app_id' in d:

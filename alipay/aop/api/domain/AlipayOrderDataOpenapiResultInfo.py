@@ -5,6 +5,8 @@ import json
 from alipay.aop.api.constant.ParamConstants import *
 from alipay.aop.api.domain.ItemOrderInfoResult import ItemOrderInfoResult
 from alipay.aop.api.domain.OrderLogisticsInformation import OrderLogisticsInformation
+from alipay.aop.api.domain.PreAmountInfoResult import PreAmountInfoResult
+from alipay.aop.api.domain.PreAmountInfoResult import PreAmountInfoResult
 
 
 class AlipayOrderDataOpenapiResultInfo(object):
@@ -24,6 +26,8 @@ class AlipayOrderDataOpenapiResultInfo(object):
         self._order_detail_link_page = None
         self._order_id = None
         self._order_status = None
+        self._pre_cost = None
+        self._pre_promotion = None
         self._real_pay_amount = None
         self._tiny_app_id = None
         self._tiny_app_logo = None
@@ -143,6 +147,26 @@ class AlipayOrderDataOpenapiResultInfo(object):
     def order_status(self, value):
         self._order_status = value
     @property
+    def pre_cost(self):
+        return self._pre_cost
+
+    @pre_cost.setter
+    def pre_cost(self, value):
+        if isinstance(value, PreAmountInfoResult):
+            self._pre_cost = value
+        else:
+            self._pre_cost = PreAmountInfoResult.from_alipay_dict(value)
+    @property
+    def pre_promotion(self):
+        return self._pre_promotion
+
+    @pre_promotion.setter
+    def pre_promotion(self, value):
+        if isinstance(value, PreAmountInfoResult):
+            self._pre_promotion = value
+        else:
+            self._pre_promotion = PreAmountInfoResult.from_alipay_dict(value)
+    @property
     def real_pay_amount(self):
         return self._real_pay_amount
 
@@ -259,6 +283,16 @@ class AlipayOrderDataOpenapiResultInfo(object):
                 params['order_status'] = self.order_status.to_alipay_dict()
             else:
                 params['order_status'] = self.order_status
+        if self.pre_cost:
+            if hasattr(self.pre_cost, 'to_alipay_dict'):
+                params['pre_cost'] = self.pre_cost.to_alipay_dict()
+            else:
+                params['pre_cost'] = self.pre_cost
+        if self.pre_promotion:
+            if hasattr(self.pre_promotion, 'to_alipay_dict'):
+                params['pre_promotion'] = self.pre_promotion.to_alipay_dict()
+            else:
+                params['pre_promotion'] = self.pre_promotion
         if self.real_pay_amount:
             if hasattr(self.real_pay_amount, 'to_alipay_dict'):
                 params['real_pay_amount'] = self.real_pay_amount.to_alipay_dict()
@@ -314,6 +348,10 @@ class AlipayOrderDataOpenapiResultInfo(object):
             o.order_id = d['order_id']
         if 'order_status' in d:
             o.order_status = d['order_status']
+        if 'pre_cost' in d:
+            o.pre_cost = d['pre_cost']
+        if 'pre_promotion' in d:
+            o.pre_promotion = d['pre_promotion']
         if 'real_pay_amount' in d:
             o.real_pay_amount = d['real_pay_amount']
         if 'tiny_app_id' in d:

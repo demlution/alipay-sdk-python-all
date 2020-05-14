@@ -12,6 +12,7 @@ class AlipayFundTransPayResponse(AlipayResponse):
         self._order_id = None
         self._out_biz_no = None
         self._status = None
+        self._trans_pay_time = None
 
     @property
     def order_id(self):
@@ -34,6 +35,13 @@ class AlipayFundTransPayResponse(AlipayResponse):
     @status.setter
     def status(self, value):
         self._status = value
+    @property
+    def trans_pay_time(self):
+        return self._trans_pay_time
+
+    @trans_pay_time.setter
+    def trans_pay_time(self, value):
+        self._trans_pay_time = value
 
     def parse_response_content(self, response_content):
         response = super(AlipayFundTransPayResponse, self).parse_response_content(response_content)
@@ -43,3 +51,5 @@ class AlipayFundTransPayResponse(AlipayResponse):
             self.out_biz_no = response['out_biz_no']
         if 'status' in response:
             self.status = response['status']
+        if 'trans_pay_time' in response:
+            self.trans_pay_time = response['trans_pay_time']

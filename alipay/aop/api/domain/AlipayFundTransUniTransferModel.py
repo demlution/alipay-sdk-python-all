@@ -3,6 +3,7 @@
 import json
 
 from alipay.aop.api.constant.ParamConstants import *
+from alipay.aop.api.domain.MutipleCurrencyDetail import MutipleCurrencyDetail
 from alipay.aop.api.domain.Participant import Participant
 from alipay.aop.api.domain.Participant import Participant
 
@@ -12,6 +13,7 @@ class AlipayFundTransUniTransferModel(object):
     def __init__(self):
         self._biz_scene = None
         self._business_params = None
+        self._mutiple_currency_detail = None
         self._order_title = None
         self._original_order_id = None
         self._out_biz_no = None
@@ -36,6 +38,16 @@ class AlipayFundTransUniTransferModel(object):
     @business_params.setter
     def business_params(self, value):
         self._business_params = value
+    @property
+    def mutiple_currency_detail(self):
+        return self._mutiple_currency_detail
+
+    @mutiple_currency_detail.setter
+    def mutiple_currency_detail(self, value):
+        if isinstance(value, MutipleCurrencyDetail):
+            self._mutiple_currency_detail = value
+        else:
+            self._mutiple_currency_detail = MutipleCurrencyDetail.from_alipay_dict(value)
     @property
     def order_title(self):
         return self._order_title
@@ -119,6 +131,11 @@ class AlipayFundTransUniTransferModel(object):
                 params['business_params'] = self.business_params.to_alipay_dict()
             else:
                 params['business_params'] = self.business_params
+        if self.mutiple_currency_detail:
+            if hasattr(self.mutiple_currency_detail, 'to_alipay_dict'):
+                params['mutiple_currency_detail'] = self.mutiple_currency_detail.to_alipay_dict()
+            else:
+                params['mutiple_currency_detail'] = self.mutiple_currency_detail
         if self.order_title:
             if hasattr(self.order_title, 'to_alipay_dict'):
                 params['order_title'] = self.order_title.to_alipay_dict()
@@ -175,6 +192,8 @@ class AlipayFundTransUniTransferModel(object):
             o.biz_scene = d['biz_scene']
         if 'business_params' in d:
             o.business_params = d['business_params']
+        if 'mutiple_currency_detail' in d:
+            o.mutiple_currency_detail = d['mutiple_currency_detail']
         if 'order_title' in d:
             o.order_title = d['order_title']
         if 'original_order_id' in d:

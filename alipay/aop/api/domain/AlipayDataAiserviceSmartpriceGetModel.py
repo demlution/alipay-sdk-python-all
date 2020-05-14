@@ -19,6 +19,7 @@ class AlipayDataAiserviceSmartpriceGetModel(object):
         self._from = None
         self._high_price_cent = None
         self._lower_price_cent = None
+        self._rank = None
         self._scene_code = None
         self._trace_id = None
         self._user_id = None
@@ -99,6 +100,13 @@ class AlipayDataAiserviceSmartpriceGetModel(object):
     def lower_price_cent(self, value):
         self._lower_price_cent = value
     @property
+    def rank(self):
+        return self._rank
+
+    @rank.setter
+    def rank(self, value):
+        self._rank = value
+    @property
     def scene_code(self):
         return self._scene_code
 
@@ -178,6 +186,11 @@ class AlipayDataAiserviceSmartpriceGetModel(object):
                 params['lower_price_cent'] = self.lower_price_cent.to_alipay_dict()
             else:
                 params['lower_price_cent'] = self.lower_price_cent
+        if self.rank:
+            if hasattr(self.rank, 'to_alipay_dict'):
+                params['rank'] = self.rank.to_alipay_dict()
+            else:
+                params['rank'] = self.rank
         if self.scene_code:
             if hasattr(self.scene_code, 'to_alipay_dict'):
                 params['scene_code'] = self.scene_code.to_alipay_dict()
@@ -218,6 +231,8 @@ class AlipayDataAiserviceSmartpriceGetModel(object):
             o.high_price_cent = d['high_price_cent']
         if 'lower_price_cent' in d:
             o.lower_price_cent = d['lower_price_cent']
+        if 'rank' in d:
+            o.rank = d['rank']
         if 'scene_code' in d:
             o.scene_code = d['scene_code']
         if 'trace_id' in d:

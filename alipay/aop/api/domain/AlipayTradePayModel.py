@@ -31,6 +31,7 @@ class AlipayTradePayModel(object):
         self._ext_user_info = None
         self._extend_params = None
         self._goods_detail = None
+        self._is_async_pay = None
         self._merchant_order_no = None
         self._operator_id = None
         self._out_trade_no = None
@@ -167,6 +168,13 @@ class AlipayTradePayModel(object):
                     self._goods_detail.append(i)
                 else:
                     self._goods_detail.append(GoodsDetail.from_alipay_dict(i))
+    @property
+    def is_async_pay(self):
+        return self._is_async_pay
+
+    @is_async_pay.setter
+    def is_async_pay(self, value):
+        self._is_async_pay = value
     @property
     def merchant_order_no(self):
         return self._merchant_order_no
@@ -391,6 +399,11 @@ class AlipayTradePayModel(object):
                 params['goods_detail'] = self.goods_detail.to_alipay_dict()
             else:
                 params['goods_detail'] = self.goods_detail
+        if self.is_async_pay:
+            if hasattr(self.is_async_pay, 'to_alipay_dict'):
+                params['is_async_pay'] = self.is_async_pay.to_alipay_dict()
+            else:
+                params['is_async_pay'] = self.is_async_pay
         if self.merchant_order_no:
             if hasattr(self.merchant_order_no, 'to_alipay_dict'):
                 params['merchant_order_no'] = self.merchant_order_no.to_alipay_dict()
@@ -521,6 +534,8 @@ class AlipayTradePayModel(object):
             o.extend_params = d['extend_params']
         if 'goods_detail' in d:
             o.goods_detail = d['goods_detail']
+        if 'is_async_pay' in d:
+            o.is_async_pay = d['is_async_pay']
         if 'merchant_order_no' in d:
             o.merchant_order_no = d['merchant_order_no']
         if 'operator_id' in d:

@@ -17,6 +17,7 @@ class AlipayUserAgreementPageSignModel(object):
     def __init__(self):
         self._access_params = None
         self._agreement_effect_type = None
+        self._allow_huazhi_degrade = None
         self._device_params = None
         self._external_agreement_no = None
         self._external_logon_id = None
@@ -51,6 +52,13 @@ class AlipayUserAgreementPageSignModel(object):
     @agreement_effect_type.setter
     def agreement_effect_type(self, value):
         self._agreement_effect_type = value
+    @property
+    def allow_huazhi_degrade(self):
+        return self._allow_huazhi_degrade
+
+    @allow_huazhi_degrade.setter
+    def allow_huazhi_degrade(self, value):
+        self._allow_huazhi_degrade = value
     @property
     def device_params(self):
         return self._device_params
@@ -195,6 +203,11 @@ class AlipayUserAgreementPageSignModel(object):
                 params['agreement_effect_type'] = self.agreement_effect_type.to_alipay_dict()
             else:
                 params['agreement_effect_type'] = self.agreement_effect_type
+        if self.allow_huazhi_degrade:
+            if hasattr(self.allow_huazhi_degrade, 'to_alipay_dict'):
+                params['allow_huazhi_degrade'] = self.allow_huazhi_degrade.to_alipay_dict()
+            else:
+                params['allow_huazhi_degrade'] = self.allow_huazhi_degrade
         if self.device_params:
             if hasattr(self.device_params, 'to_alipay_dict'):
                 params['device_params'] = self.device_params.to_alipay_dict()
@@ -286,6 +299,8 @@ class AlipayUserAgreementPageSignModel(object):
             o.access_params = d['access_params']
         if 'agreement_effect_type' in d:
             o.agreement_effect_type = d['agreement_effect_type']
+        if 'allow_huazhi_degrade' in d:
+            o.allow_huazhi_degrade = d['allow_huazhi_degrade']
         if 'device_params' in d:
             o.device_params = d['device_params']
         if 'external_agreement_no' in d:

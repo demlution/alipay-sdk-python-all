@@ -14,10 +14,12 @@ class AlipayDataDataserviceAdGroupCreateormodifyModel(object):
         self._group_charge = None
         self._group_name = None
         self._group_outer_id = None
+        self._group_status = None
         self._item_id_list = None
         self._plan_outer_id = None
         self._targeting_list = None
         self._time_option = None
+        self._time_schema = None
 
     @property
     def biz_token(self):
@@ -55,6 +57,13 @@ class AlipayDataDataserviceAdGroupCreateormodifyModel(object):
     def group_outer_id(self, value):
         self._group_outer_id = value
     @property
+    def group_status(self):
+        return self._group_status
+
+    @group_status.setter
+    def group_status(self, value):
+        self._group_status = value
+    @property
     def item_id_list(self):
         return self._item_id_list
 
@@ -91,6 +100,13 @@ class AlipayDataDataserviceAdGroupCreateormodifyModel(object):
     @time_option.setter
     def time_option(self, value):
         self._time_option = value
+    @property
+    def time_schema(self):
+        return self._time_schema
+
+    @time_schema.setter
+    def time_schema(self, value):
+        self._time_schema = value
 
 
     def to_alipay_dict(self):
@@ -120,6 +136,11 @@ class AlipayDataDataserviceAdGroupCreateormodifyModel(object):
                 params['group_outer_id'] = self.group_outer_id.to_alipay_dict()
             else:
                 params['group_outer_id'] = self.group_outer_id
+        if self.group_status:
+            if hasattr(self.group_status, 'to_alipay_dict'):
+                params['group_status'] = self.group_status.to_alipay_dict()
+            else:
+                params['group_status'] = self.group_status
         if self.item_id_list:
             if isinstance(self.item_id_list, list):
                 for i in range(0, len(self.item_id_list)):
@@ -150,6 +171,11 @@ class AlipayDataDataserviceAdGroupCreateormodifyModel(object):
                 params['time_option'] = self.time_option.to_alipay_dict()
             else:
                 params['time_option'] = self.time_option
+        if self.time_schema:
+            if hasattr(self.time_schema, 'to_alipay_dict'):
+                params['time_schema'] = self.time_schema.to_alipay_dict()
+            else:
+                params['time_schema'] = self.time_schema
         return params
 
     @staticmethod
@@ -167,6 +193,8 @@ class AlipayDataDataserviceAdGroupCreateormodifyModel(object):
             o.group_name = d['group_name']
         if 'group_outer_id' in d:
             o.group_outer_id = d['group_outer_id']
+        if 'group_status' in d:
+            o.group_status = d['group_status']
         if 'item_id_list' in d:
             o.item_id_list = d['item_id_list']
         if 'plan_outer_id' in d:
@@ -175,6 +203,8 @@ class AlipayDataDataserviceAdGroupCreateormodifyModel(object):
             o.targeting_list = d['targeting_list']
         if 'time_option' in d:
             o.time_option = d['time_option']
+        if 'time_schema' in d:
+            o.time_schema = d['time_schema']
         return o
 
 

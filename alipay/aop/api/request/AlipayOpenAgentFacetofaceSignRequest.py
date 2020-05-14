@@ -17,6 +17,8 @@ class AlipayOpenAgentFacetofaceSignRequest(object):
         self._date_limitation = None
         self._long_term = None
         self._mcc_code = None
+        self._rate = None
+        self._sign_and_auth = None
         self._business_license_auth_pic = None
         self._business_license_pic = None
         self._shop_scene_pic = None
@@ -74,6 +76,20 @@ class AlipayOpenAgentFacetofaceSignRequest(object):
     @mcc_code.setter
     def mcc_code(self, value):
         self._mcc_code = value
+    @property
+    def rate(self):
+        return self._rate
+
+    @rate.setter
+    def rate(self, value):
+        self._rate = value
+    @property
+    def sign_and_auth(self):
+        return self._sign_and_auth
+
+    @sign_and_auth.setter
+    def sign_and_auth(self, value):
+        self._sign_and_auth = value
 
     @property
     def business_license_auth_pic(self):
@@ -223,6 +239,16 @@ class AlipayOpenAgentFacetofaceSignRequest(object):
                 params['mcc_code'] = json.dumps(obj=self.mcc_code.to_alipay_dict(), ensure_ascii=False, sort_keys=True, separators=(',', ':'))
             else:
                 params['mcc_code'] = self.mcc_code
+        if self.rate:
+            if hasattr(self.rate, 'to_alipay_dict'):
+                params['rate'] = json.dumps(obj=self.rate.to_alipay_dict(), ensure_ascii=False, sort_keys=True, separators=(',', ':'))
+            else:
+                params['rate'] = self.rate
+        if self.sign_and_auth:
+            if hasattr(self.sign_and_auth, 'to_alipay_dict'):
+                params['sign_and_auth'] = json.dumps(obj=self.sign_and_auth.to_alipay_dict(), ensure_ascii=False, sort_keys=True, separators=(',', ':'))
+            else:
+                params['sign_and_auth'] = self.sign_and_auth
         if self.terminal_type:
             params['terminal_type'] = self.terminal_type
         if self.terminal_info:
